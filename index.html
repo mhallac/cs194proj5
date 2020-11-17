@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project 5 - Matthew Hallac</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <div class="wrapper">
+        <h1>Stiching Photo Mosaics</h1>
+        <h2>Matthew Hallac</h2>
+        <h3>Part A: Image Warping and Mosaicing</h3>
+        <p>
+            For this project, I have fun with homographies to warp images and create mosaics, building panoramas from muliple images. 
+        </p>
+        <h4>The Images</h4>
+        <p>
+            The first step was to shoot the pictures that would be used to make the mosaics. To get these pictures, I went around my town to find buildings with lots of corners and large signs  
+        </p>
+        <div class="gallery">
+            <figure>
+                <img src="inputs/vasabuilding1.jpg"> 
+            </figure>
+            <figure>
+                <img src="inputs/vasabuilding2.jpg"> 
+            </figure>
+            <figure>
+                <img src="inputs/vasabuilding3.jpg"> 
+            </figure>
+        </div>
+
+        <div class="gallery">
+            <figure>
+                <img src="inputs/vasasign1.jpg"> 
+            </figure>
+            <figure>
+                <img src="inputs/vasasign2.jpg"> 
+            </figure>
+        </div>
+
+        <div class="gallery">
+            <figure>
+                <img src="inputs/library1.jpg"> 
+            </figure>
+            <figure>
+                <img src="inputs/library2.jpg"> 
+            </figure>
+            <figure>
+                <img src="inputs/library3.jpg"> 
+            </figure>
+        </div>
+       
+
+        <h4>Recover Homographies and Image Warping</h4>
+        <p>
+            Now, given the keypoints for two images, I can calculate a homography between them by setting up the problem through least squares using points from both images. I can then apply the homography to warp an image to look like another image.
+        </p>
+       
+        <h4>Image Rectification</h4>
+        
+    </body>
+</html>

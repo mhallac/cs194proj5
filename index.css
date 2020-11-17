@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #555555;
+    background-image: url(bgImg.jfif);
+}
+
+.wrapper {
+    margin-left: 15%;
+    margin-right: 15%;
+    border-style: outset;
+    padding-right: 35px;
+    padding-left: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: white;
+
+}
+
+.gallery {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+
+.stack {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+.stack img {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 175px;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    display: block
+}
+
+table img {
+    width: 175px;
+}
+
+img {
+    width: 300px;
+}
+
+figcaption {
+    text-align: center;
+    font-weight: bold;
+    font-size: small;
+    width: 250px;
+    border: double;
+}
+
+.figures {
+    width: 300px;
+}
+
+img:hover {
+    transform: scale(1.25);
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+
+
+
+  }
+  
+  .navbar li {
+    float: right;
+  }
+  
+  .navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  .navbar li a:hover {
+    background-color: #111;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #ad1313;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+  }
+  
+  .button:hover {background-color: #cc1313}
+  
+  .button:active {
+    background-color: #8a1313;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
