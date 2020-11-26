@@ -14,7 +14,7 @@
         </p>
         <h4>The Images</h4>
         <p>
-            The first step was to shoot the pictures that would be used to make the mosaics. To get these pictures, I went around my town to find buildings with lots of corners and large signs  
+            The first step was to shoot the pictures that would be used to make the mosaics. To get these pictures, I went around my town to find buildings with lots of corners and large signs, and I also shot some photos around my house.
         </p>
         <div class="gallery">
             <figure>
@@ -52,31 +52,148 @@
 
         <h4>Recover Homographies and Image Warping</h4>
         <p>
-            Now, given the keypoints for two images, I can calculate a homography between them by setting up the problem through least squares using points from both images. I can then apply the homography to warp an image to look like another image.
+            Given correspondence points between two images, I need to calculate the homography matrix for the projective warp between the two images in order to warp one image to look like another. The homography matrix we need to recover is shown below:
         </p>
+        <div class="gallery">
+            <figure>
+                <img src="inputs/homographyMatrix.PNG"> 
+                <figcaption>
+                    Homography matrix, <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa20/Lectures/mosaic.pdf">Source</a>
+                </figcaption>
+            </figure>
+        </div>
+        <p>
+            Since the H matrix only has 8 unknowns, in theory we should only need 4 points to fully compute it. However, this can be very sensitive to error, so we select many points and use least squares to estimate H. I used np.linalg.lstsq() to compute an estimate for H
+        </p>
+
        
         <h4>Image Rectification</h4>
         <p>
-            Here I take an image of a surface that was taken at an angle and warp it so that it looks like it is facing the camera.
+            Here I take an image of a surface that was taken at an angle and warp it so that it looks like it is facing the camera. I selected four points for each of the objects in the input photos, and then selected the desired shape for the output. Then, I computed a homography and warped the images so the shape of the selected points matched the shape of the desired points. For each of these, the four points selected were the corners of the object
         </p>
         <div class="gallery">
             <figure>
                 <img src="inputs/box.jpg"> 
+                <figcaption>
+                    Original picture of box on the ground
+                </figcaption>
             </figure>
+
             <figure>
                 <img src="outputs/boxout.jpg"> 
+                <figcaption>
+                    Rectified picture of the box on the ground
+                </figcaption>
             </figure>
+
         </div>
         <div class="gallery">
             <figure>
                 <img src="inputs/painting.jpg"> 
+                <figcaption>
+                    Original picture of the painting
+                </figcaption>
             </figure>
+
             <figure>
                 <img src="outputs/paintingout.jpg"> 
+                <figcaption>
+                    Rectified picture of the painting
+                </figcaption>
             </figure>
-        </div>        
+ 
+        </div>   
         
+        <h4>Blend the Images into a Mosaic</h4>
+        <p>
+            Now, I can take images of different parts of a scene, warp them so they are all facing the camera, and blend them using a weighted average into a mosaic.
+        </p>
+        
+        <h4>Cool Learnings</h4>
+        <p>
+            For this part of the project, I was really impressed by how realistic the rectified images look. They are virtually indiscernible from images of the same object taken at a different angle!
+        </p>
 
-        
+        <h3>Part B: Feature Matching for Autostitching</h3>
+        <p>
+            The first part of generating an image mosaic, picking correspondences, takes a lot of time and is oftentimes very error prone. So here I implement the algorithm detailed in <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa20/hw/proj5/Papers/MOPS.pdf">this paper</a> to automatically generate correspondences
+        </p>
+        <h4>Harris Corners</h4>
+        <p>
+            The first step was to find Harris corners, or points where there is a high change in both the x and y direction. To implement Harris Corners, I used the sample code <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa20/hw/proj5/harris.py">here</a>. Here are the outputs of Harris corners computed.
+        </p>
+        <div class="gallery">
+            <figure>
+                <img src="outputs/harrispts.jpg"> 
+                <figcaption>
+                    Harris Corners
+                </figcaption>
+            </figure>
+
+        </div>  
+
+        <h4>Adaptive Non-Maximal Suppression</h4>
+        <p>
+            The next step was to lower the amount of points using Adaptive Non-Maximal Suppression (ANMS) as described in the research paper. The points selected by ANMS are in orange, while the Harris corners are in blue.
+        </p>
+        <div class="gallery">
+            <figure>
+                <img src="outputs/suppressedpts.jpg"> 
+                <figcaption>
+                    ANMS
+                </figcaption>
+            </figure>
+
+        </div>  
+        <h4>Feature Descriptors</h4>
+        <p>
+            Now I could extract feature descriptors from the image by first going up a level on the gaussian pyramid by filtering and resizing the image, and then taking an 8x8 region around each point as the descriptor. Some sample descriptors are shown below.
+        </p>
+        <div class="gallery">
+            <figure>
+                <img src="outputs/descriptors.PNG"> 
+                <figcaption>
+                    Feature Descriptors
+                </figcaption>
+            </figure>
+
+        </div>  
+        <h4>Feature Matching and RANSAC</h4>
+        <p>
+            To match the features of one image to another, I went through each of the descriptors in one image, and found its first nearest neighbor and its second nearest neighbor according to SSD. Then, I only kept the features whose ratio of first nearest neighbor to second nearest neighbor was below a certain threshold. I found the best results to be when this threshold was set to 0.6. 
+        </p>
+        <div class="gallery">
+            <figure>
+                <img src="outputs/ransac2.jpg"> 
+                <figcaption>
+                    Correspondence points after feature matching and RANSAC (Only inliers)
+                </figcaption>
+            </figure>
+
+            <figure>
+                <img src="outputs/ransac1.jpg"> 
+                <figcaption>
+                    Correspondence points after feature matching and RANSAC - Notice how they match the other image
+                </figcaption>
+            </figure>
+
+        </div>   
+
+        <p>
+            Finally, to compute a homography for the points given, I implemented a Random Sample Consensus (RANSAC) algorithm, described in the image below. 
+        </p>
+        <div class="gallery">
+            <figure>
+                <img src="inputs/ransac.PNG"> 
+                <figcaption>
+                    <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa20/Lectures/feature-alignment.pdf">Source</a>
+                </figcaption>
+            </figure>
+
+        </div>  
+        <p>
+            This gave me a homography that I could plug into the warping steps from part one to automate image mosaics!
+        </p>
+
     </body>
 </html>
