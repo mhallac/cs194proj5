@@ -116,9 +116,17 @@
                     Image Mosaic
                 </figcaption>
             </figure>
-
         </div>  
         
+        <div class="gallery">
+            <figure>
+                <img src="outputs/blendedvasa.jpg"> 
+                <figcaption>
+                    Image Mosaic
+                </figcaption>
+            </figure>
+        </div>  
+
         <h4>Cool Learnings</h4>
         <p>
             For this part of the project, I was really impressed by how realistic the rectified images look. They are virtually indiscernible from images of the same object taken at a different angle!
@@ -207,30 +215,47 @@
         <h4>Final Image Mosaics</h4>
         <div class="gallery">
             <figure>
-                <img src="outputs/mosaic2.jpg"> 
+                <img src="inputs/boatA1.jpg"> 
+            </figure>
+            <figure>
+                <img src="inputs/boatA2.jpg"> 
+            </figure>
+        </div>
+        <div class="gallery">
+            <figure>
+                <img src="outputs/boatout.jpg"> 
                 <figcaption>
-                    Automatically generated mosaic
+                    Automatically generated painting mosaic
                 </figcaption>
             </figure>
         </div>
-            <div class="gallery">
-                <figure>
-                    <img src="outputs/mosaic3.jpg"> 
-                    <figcaption>
-                        Automatically generated painting mosaic
-                    </figcaption>
-                </figure>
-    
-            </div>  
-            <div class="gallery">
-                <figure>
-                    <img src="outputs/mosaic4.jpg"> 
-                    <figcaption>
-                        Library Mosaic
-                    </figcaption>
-                </figure>
-    
-            </div>  
 
+        <div class="gallery">
+            <figure>
+                <img src="outputs/libraryout.jpg"> 
+                <figcaption>
+                    Automatically generated library mosaic
+                </figcaption>
+            </figure>
+
+        </div>  
+        <div class="gallery">
+            <figure>
+                <img src="outputs/blendedhouseleft.jpg"> 
+                <figcaption>
+                    Manually Selected House Mosaic
+                </figcaption>
+                <img src="outputs/houseout.jpg"> 
+                <figcaption>
+                    Automatically Selected House Mosaic
+                </figcaption>
+            </figure>
+
+        </div>  
+
+        <h4>Learnings</h4>
+        <p>
+            The most interesting thing I learned from this project was the way the threshold was set for feature matching (first nearest neighbor over second nearest neighbor.) It was interesting how the fact that the features match up one to one allows us to effectively use the ratio to come up with a better threshold than just the SSD alone.
+        </p>
     </body>
 </html>
